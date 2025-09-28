@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>FarmiQuest - Gamified Farming</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="screen active">
+        <div class="splash-content">
+            <div class="app-logo">
+                <div class="logo-icon">🌱</div>
+                <h1>FarmiQuest</h1>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen">
+        <div class="welcome-hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="app-icon">🌾</div>
+                <h1>Welcome to FarmiQuest</h1>
+                <p>Transform your farming journey into an engaging adventure</p>
+                <div class="feature-highlights">
+                    <div class="highlight">
+                        <span class="highlight-icon">📱</span>
+                        <span>Smart Farming</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-icon">🏆</span>
+                        <span>Earn Rewards</span>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-icon">👥</span>
+                        <span>Join Community</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="welcome-actions">
+            <div class="language-selector">
+                <select class="form-control">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="es">தமிழ்</option>
+                </select>
+            </div>
+            <button class="btn btn--primary btn--large" onclick="startOnboarding()">
+                Get Started
+                <span class="btn-icon">→</span>
+            </button>
+            <button class="btn btn--outline btn--large" onclick="showLogin()">
+                I Have an Account
+            </button>
+        </div>
+    </div>
+
+    <!-- Onboarding Screen -->
+    <div id="onboarding-screen" class="screen">
+        <div class="onboarding-header">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="onboarding-progress"></div>
+                </div>
+                <span class="progress-text">Step <span id="current-step">1</span> of 4</span>
+            </div>
+        </div>
+        
+        <div class="onboarding-content">
+            <!-- Step 1: Personal Info -->
+            <div class="onboarding-step active" data-step="1">
+                <div class="step-icon">👤</div>
+                <h2>Tell us about yourself</h2>
+                <p>Help us personalize your farming experience</p>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="farmer-name" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-control" id="farmer-phone" placeholder="Phone number">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="experience-level">
+                        <option value="">Select experience level</option>
+                        <option value="beginner">Beginner (0-2 years)</option>
+                        <option value="intermediate">Intermediate (3-10 years)</option>
+                        <option value="expert">Expert (10+ years)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Step 2: Crop Selection -->
+            <div class="onboarding-step" data-step="2">
+                <div class="step-icon">🌾</div>
+                <h2>What do you grow?</h2>
+                <p>Select your primary crops to get personalized recommendations</p>
+                <div class="crop-grid">
+                    <div class="crop-card" data-crop="rice">
+                        <div class="crop-icon">🌾</div>
+                        <span>Rice</span>
+                    </div>
+                    <div class="crop-card" data-crop="wheat">
+                        <div class="crop-icon">🌾</div>
+                        <span>Wheat</span>
+                    </div>
+                    <div class="crop-card" data-crop="vegetables">
+                        <div class="crop-icon">🥕</div>
+                        <span>Vegetables</span>
+                    </div>
+                    <div class="crop-card" data-crop="fruits">
+                        <div class="crop-icon">🍎</div>
+                        <span>Fruits</span>
+                    </div>
+                    <div class="crop-card" data-crop="pulses">
+                        <div class="crop-icon">🫘</div>
+                        <span>Pulses</span>
+                    </div>
+                    <div class="crop-card" data-crop="sugarcane">
+                        <div class="crop-icon">🎋</div>
+                        <span>Sugarcane</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Farm Details -->
+            <div class="onboarding-step" data-step="3">
+                <div class="step-icon">🚜</div>
+                <h2>Farm Information</h2>
+                <p>Help us understand your farming operation</p>
+                <div class="form-group">
+                    <select class="form-control" id="farm-size">
+                        <option value="">Select farm size</option>
+                        <option value="small">Small (< 2 acres)</option>
+                        <option value="medium">Medium (2-10 acres)</option>
+                        <option value="large">Large (10+ acres)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="farm-location" placeholder="Location/District">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="farming-type">
+                        <option value="">Type of farming</option>
+                        <option value="organic">Organic</option>
+                        <option value="conventional">Conventional</option>
+                        <option value="mixed">Mixed</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Step 4: Goals -->
+            <div class="onboarding-step" data-step="4">
+                <div class="step-icon">🎯</div>
+                <h2>Your Goals</h2>
+                <p>What do you want to achieve with FarmiQuest?</p>
+                <div class="goals-grid">
+                    <div class="goal-card" data-goal="increase-yield">
+                        <div class="goal-icon">📈</div>
+                        <span>Increase Yield</span>
+                    </div>
+                    <div class="goal-card" data-goal="sustainable-farming">
+                        <div class="goal-icon">🌿</div>
+                        <span>Sustainable Farming</span>
+                    </div>
+                    <div class="goal-card" data-goal="cost-reduction">
+                        <div class="goal-icon">💰</div>
+                        <span>Reduce Costs</span>
+                    </div>
+                    <div class="goal-card" data-goal="learn-techniques">
+                        <div class="goal-icon">📚</div>
+                        <span>Learn Techniques</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="onboarding-actions">
+            <button class="btn btn--outline" id="prev-btn" onclick="prevStep()">Previous</button>
+            <button class="btn btn--primary" id="next-btn" onclick="nextStep()">Next</button>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboard-screen" class="screen">
+        <div class="mobile-header">
+            <div class="header-top">
+                <div class="greeting">
+                    <h2 id="greeting-text">Good Morning! 🌅</h2>
+                    <p>Welcome back, <span id="user-name">Farmer</span></p>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" onclick="showNotifications()">
+                        <span class="notification-icon">🔔</span>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <button class="action-btn" onclick="showProfile()">
+                        <div class="profile-avatar">👨‍🌾</div>
+                    </button>
+                </div>
+            </div>
+            <div class="level-progress">
+                <div class="level-info">
+                    <span>Level <span id="user-level">1</span></span>
+                    <span class="xp-text"><span id="user-xp">1250</span> XP</span>
+                </div>
+                <div class="progress-bar level-bar">
+                    <div class="progress-fill" id="level-progress" style="width: 65%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Weather Card -->
+            <div class="weather-card card">
+                <div class="weather-header">
+                    <h3>Today's Weather</h3>
+                    <span class="location">📍 <span id="location-name">Your Farm</span></span>
+                </div>
+                <div class="weather-main">
+                    <div class="weather-left">
+                        <div class="weather-icon">☀️</div>
+                        <div class="temperature">28°C</div>
+                    </div>
+                    <div class="weather-right">
+                        <div class="weather-detail">
+                            <span class="detail-label">Humidity</span>
+                            <span class="detail-value">65%</span>
+                        </div>
+                        <div class="weather-detail">
+                            <span class="detail-label">Wind</span>
+                            <span class="detail-value">12 km/h</span>
+                        </div>
+                        <div class="weather-detail">
+                            <span class="detail-label">Rain</span>
+                            <span class="detail-value">20%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-tip">
+                    <span class="ai-icon">🤖</span>
+                    <span id="ai-recommendation">Perfect weather for irrigation. Consider watering in the evening.</span>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="active-missions">3</div>
+                    <div class="stat-label">Active Missions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="total-badges">5</div>
+                    <div class="stat-label">Badges</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="completion-rate">87%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+
+            <!-- Active Missions -->
+            <div class="section">
+                <div class="section-header">
+                    <h3>Active Missions</h3>
+                    <button class="btn btn--sm btn--outline" onclick="showMissions()">View All</button>
+                </div>
+                <div class="missions-scroll" id="active-missions-list">
+                    <div class="mission-card featured" onclick="showMissionDetail('water-conservation')">
+                        <div class="mission-badge featured-badge">Featured</div>
+                        <div class="mission-header">
+                            <div class="mission-icon">💧</div>
+                            <div class="mission-info">
+                                <h4>Water Conservation</h4>
+                                <span class="difficulty easy">Easy</span>
+                            </div>
+                        </div>
+                        <p>Reduce water usage by 20% using smart irrigation techniques</p>
+                        <div class="mission-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <span class="progress-text">60% Complete</span>
+                        </div>
+                        <div class="mission-reward">
+                            <span class="reward-icon">💰</span>
+                            <span>+300 XP</span>
+                        </div>
+                    </div>
+
+                    <div class="mission-card" onclick="showMissionDetail('pest-management')">
+                        <div class="mission-header">
+                            <div class="mission-icon">🛡️</div>
+                            <div class="mission-info">
+                                <h4>Organic Pest Control</h4>
+                                <span class="difficulty medium">Medium</span>
+                            </div>
+                        </div>
+                        <p>Learn and apply natural pest management techniques</p>
+                        <div class="mission-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%"></div>
+                            </div>
+                            <span class="progress-text">30% Complete</span>
+                        </div>
+                        <div class="mission-reward">
+                            <span class="reward-icon">🎖️</span>
+                            <span>Pest Master Badge</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="action-tile" onclick="openCamera()">
+                    <div class="action-icon">📸</div>
+                    <span>Crop Photo</span>
+                </button>
+                <button class="action-tile" onclick="showCommunity()">
+                    <div class="action-icon">💬</div>
+                    <span>Ask Expert</span>
+                </button>
+                <button class="action-tile" onclick="showWeatherDetails()">
+                    <div class="action-icon">🌤️</div>
+                    <span>Weather</span>
+                </button>
+                <button class="action-tile" onclick="showMarketPrices()">
+                    <div class="action-icon">📈</div>
+                    <span>Market</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Missions Screen -->
+    <div id="missions-screen" class="screen">
+        <div class="screen-header">
+            <button class="back-btn" onclick="showDashboard()">←</button>
+            <h2>Missions & Challenges</h2>
+            <button class="filter-btn" onclick="toggleMissionFilters()">
+                <span>⚙️</span>
+            </button>
+        </div>
+
+        <div class="mission-filters hidden" id="mission-filters">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="active">Active</button>
+                <button class="filter-tab" data-filter="completed">Completed</button>
+                <button class="filter-tab" data-filter="available">Available</button>
+            </div>
+        </div>
+
+        <div class="missions-content">
+            <div class="mission-category">
+                <h3>🌱 Sustainable Practices</h3>
+                <div class="category-missions">
+                    <div class="mission-item active" onclick="showMissionDetail('water-conservation')">
+                        <div class="mission-left">
+                            <div class="mission-icon">💧</div>
+                            <div class="mission-details">
+                                <h4>Water Conservation Challenge</h4>
+                                <p>Reduce water usage by 20% this week</p>
+                                <div class="mission-meta">
+                                    <span class="difficulty easy">Easy</span>
+                                    <span class="reward">+300 XP</span>
+                                </div>
+                                <div class="progress-bar mini">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mission-status in-progress">60%</div>
+                    </div>
+
+                    <div class="mission-item" onclick="showMissionDetail('cover-crops')">
+                        <div class="mission-left">
+                            <div class="mission-icon">🌿</div>
+                            <div class="mission-details">
+                                <h4>Cover Crop Champion</h4>
+                                <p>Plant cover crops to improve soil health</p>
+                                <div class="mission-meta">
+                                    <span class="difficulty easy">Easy</span>
+                                    <span class="reward">+250 XP</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mission-status new">New</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-category">
+                <h3>🚜 Crop Management</h3>
+                <div class="category-missions">
+                    <div class="mission-item active" onclick="showMissionDetail('pest-management')">
+                        <div class="mission-left">
+                            <div class="mission-icon">🛡️</div>
+                            <div class="mission-details">
+                                <h4>Organic Pest Control</h4>
+                                <p>Master natural pest management techniques</p>
+                                <div class="mission-meta">
+                                    <span class="difficulty medium">Medium</span>
+                                    <span class="reward">Pest Master Badge</span>
+                                </div>
+                                <div class="progress-bar mini">
+                                    <div class="progress-fill" style="width: 30%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mission-status in-progress">30%</div>
+                    </div>
+
+                    <div class="mission-item" onclick="showMissionDetail('soil-testing')">
+                        <div class="mission-left">
+                            <div class="mission-icon">🧪</div>
+                            <div class="mission-details">
+                                <h4>Soil Health Check</h4>
+                                <p>Test and analyze your soil composition</p>
+                                <div class="mission-meta">
+                                    <span class="difficulty medium">Medium</span>
+                                    <span class="reward">+400 XP</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mission-status available">Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission Detail Screen -->
+    <div id="mission-detail-screen" class="screen">
+        <div class="mission-detail-header">
+            <button class="back-btn" onclick="showMissions()">←</button>
+            <div class="mission-hero">
+                <div class="mission-icon-large" id="detail-mission-icon">💧</div>
+                <h2 id="detail-mission-title">Water Conservation Challenge</h2>
+                <div class="mission-badges">
+                    <span class="difficulty easy" id="detail-difficulty">Easy</span>
+                    <span class="category-badge" id="detail-category">Sustainable</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mission-detail-content">
+            <div class="mission-description card">
+                <h4>Mission Description</h4>
+                <p id="detail-description">Reduce your farm's water usage by 20% this week through efficient irrigation practices and smart water management techniques.</p>
+            </div>
+
+            <div class="mission-progress-card card">
+                <h4>Your Progress</h4>
+                <div class="progress-circle" id="progress-circle">
+                    <svg class="progress-ring" width="100" height="100">
+                        <circle cx="50" cy="50" r="45" stroke="#e2e8f0" stroke-width="8" fill="transparent"/>
+                        <circle cx="50" cy="50" r="45" stroke="var(--color-primary)" stroke-width="8" fill="transparent" 
+                                stroke-dasharray="283" stroke-dashoffset="113" stroke-linecap="round" id="progress-ring"/>
+                    </svg>
+                    <div class="progress-text">
+                        <span class="progress-value" id="progress-value">60%</span>
+                        <span class="progress-label">Complete</span>
+                    </div>
+                </div>
+                <div class="progress-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="completed-steps">3</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="total-steps">5</span>
+                        <span class="stat-label">Total Steps</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-steps card">
+                <h4>Mission Steps</h4>
+                <div class="steps-list" id="steps-container">
+                    <!-- Steps will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="ai-assistance card">
+                <div class="ai-header">
+                    <span class="ai-icon">🤖</span>
+                    <h4>AI Assistant</h4>
+                </div>
+                <div class="ai-content">
+                    <p id="ai-tips">Based on your progress and weather conditions, here are some personalized tips to help you complete this mission successfully.</p>
+                    <div class="ai-actions">
+                        <button class="btn btn--sm btn--outline" onclick="getAITips()">Get More Tips</button>
+                        <button class="btn btn--sm btn--outline" onclick="askAI()">Ask AI</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mission-actions-bar">
+            <button class="btn btn--outline btn--large" onclick="openCamera()">
+                📸 Upload Photo
+            </button>
+            <button class="btn btn--primary btn--large" onclick="markStepComplete()">
+                ✓ Mark Complete
+            </button>
+        </div>
+    </div>
+
+    <!-- Community Screen -->
+    <div id="community-screen" class="screen">
+        <div class="screen-header">
+            <button class="back-btn" onclick="showDashboard()">←</button>
+            <h2>Community</h2>
+            <button class="search-btn" onclick="showSearch()">🔍</button>
+        </div>
+
+        <div class="community-tabs">
+            <button class="tab-button active" data-tab="feed">Feed</button>
+            <button class="tab-button" data-tab="experts">Experts</button>
+            <button class="tab-button" data-tab="groups">Groups</button>
+        </div>
+
+        <div class="community-content">
+            <div class="tab-content active" id="feed-content">
+                <div class="post-item card">
+                    <div class="post-header">
+                        <div class="user-avatar">👨‍🌾</div>
+                        <div class="user-info">
+                            <h4>Raj Kumar</h4>
+                            <span class="user-location">Punjab</span>
+                            <span class="post-time">2h ago</span>
+                        </div>
+                        <div class="post-menu">⋮</div>
+                    </div>
+                    <div class="post-content">
+                        <p>Just completed the water conservation mission! Reduced usage by 25% using drip irrigation. 🌱💧</p>
+                        <div class="post-image">
+                            <div class="placeholder-image">📸 Crop Photo</div>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn">👍 Like (12)</button>
+                        <button class="action-btn">💬 Comment (3)</button>
+                        <button class="action-btn">↗️ Share</button>
+                    </div>
+                </div>
+
+                <div class="post-item card">
+                    <div class="post-header">
+                        <div class="user-avatar expert">👩‍🔬</div>
+                        <div class="user-info">
+                            <h4>Dr. Priya Singh</h4>
+                            <span class="expert-badge">🎓 Expert</span>
+                            <span class="post-time">4h ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p><strong>Tip of the Day:</strong> Monitor soil moisture before irrigation. Overwatering can be as harmful as underwatering. Use the finger test or soil moisture meters! 🌾</p>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn">👍 Like (45)</button>
+                        <button class="action-btn">💬 Comment (12)</button>
+                        <button class="action-btn">📚 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="floating-action-btn" onclick="createPost()">
+            <span>✏️</span>
+        </button>
+    </div>
+
+    <!-- Profile Screen -->
+    <div id="profile-screen" class="screen">
+        <div class="profile-header">
+            <button class="back-btn" onclick="showDashboard()">←</button>
+            <h2>Profile</h2>
+            <button class="settings-btn" onclick="showSettings()">⚙️</button>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-info card">
+                <div class="profile-avatar-large">👨‍🌾</div>
+                <h3 id="profile-name">Farmer Name</h3>
+                <p id="profile-location">Farm Location</p>
+                <div class="profile-level">
+                    <span class="level-badge">Level <span id="profile-level-num">1</span></span>
+                    <span class="xp-badge"><span id="profile-xp">1250</span> XP</span>
+                </div>
+            </div>
+
+            <div class="achievements-section">
+                <div class="section-header">
+                    <h3>Achievements</h3>
+                    <span class="badge-count">5/20</span>
+                </div>
+                <div class="badges-grid">
+                    <div class="badge earned">
+                        <div class="badge-icon">💧</div>
+                        <span>Water Saver</span>
+                    </div>
+                    <div class="badge earned">
+                        <div class="badge-icon">🌱</div>
+                        <span>Green Thumb</span>
+                    </div>
+                    <div class="badge earned">
+                        <div class="badge-icon">👥</div>
+                        <span>Community Helper</span>
+                    </div>
+                    <div class="badge locked">
+                        <div class="badge-icon">🏆</div>
+                        <span>Champion</span>
+                    </div>
+                    <div class="badge locked">
+                        <div class="badge-icon">🎯</div>
+                        <span>Mission Master</span>
+                    </div>
+                    <div class="badge locked">
+                        <div class="badge-icon">🌾</div>
+                        <span>Harvest Hero</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section card">
+                <h4>Farm Statistics</h4>
+                <div class="farm-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Crop Type</span>
+                        <span class="stat-value" id="crop-type">Rice</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Farm Size</span>
+                        <span class="stat-value" id="farm-size-display">5 acres</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Missions Completed</span>
+                        <span class="stat-value" id="completed-missions">12</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Success Rate</span>
+                        <span class="stat-value" id="success-rate">87%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="action-item" onclick="editProfile()">
+                    <span class="action-icon">✏️</span>
+                    <span>Edit Profile</span>
+                    <span class="action-arrow">→</span>
+                </button>
+                <button class="action-item" onclick="showHelp()">
+                    <span class="action-icon">❓</span>
+                    <span>Help & Support</span>
+                    <span class="action-arrow">→</span>
+                </button>
+                <button class="action-item" onclick="shareApp()">
+                    <span class="action-icon">📤</span>
+                    <span>Share App</span>
+                    <span class="action-arrow">→</span>
+                </button>
+                <button class="action-item danger" onclick="logout()">
+                    <span class="action-icon">🚪</span>
+                    <span>Logout</span>
+                    <span class="action-arrow">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="showDashboard()">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" onclick="showMissions()">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-label">Missions</span>
+        </button>
+        <button class="nav-item" onclick="showCommunity()">
+            <span class="nav-icon">👥</span>
+            <span class="nav-label">Community</span>
+        </button>
+        <button class="nav-item" onclick="showProfile()">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </button>
+    </nav>
+
+    <!-- Camera Modal -->
+    <div class="modal" id="camera-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Take a Photo</h3>
+                <button class="modal-close" onclick="closeCamera()">×</button>
+            </div>
+            <div class="camera-placeholder">
+                <div class="camera-icon">📷</div>
+                <p>Camera access would be available here</p>
+                <button class="btn btn--primary" onclick="simulatePhotoTaken()">Simulate Photo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="success-content">
+                <div class="success-icon">🎉</div>
+                <h3>Congratulations!</h3>
+                <p id="success-message">You've completed a mission step!</p>
+                <div class="reward-display">
+                    <span class="reward-icon">💰</span>
+                    <span class="reward-text" id="reward-amount">+50 XP</span>
+                </div>
+                <button class="btn btn--primary btn--large" onclick="closeSuccessModal()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
